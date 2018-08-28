@@ -65,6 +65,31 @@ export function getWeek(yearStart, date, weekStartsOn) {
     (Math.round((date - yearStartDate) / (60 * 60 * 24 * 1000)) + yearStartDate.getDay() + 1 - weekStartsOn) / 7
   );
 }
+export function getWeekOffSet(yearStart, date, weekStartsOn) {
+  const yearStartDate = (typeof yearStart === 'number')
+    ? new Date(yearStart, 0, 1) // 1st Jan of the Year
+    : yearStart;
+  let minStartDate = moment(yearStart).startOf('month');
+  let selectStartDate = moment(date).startOf('month');
+  let rows = 0;
+  for (let i = minStartDate; i <= selectStartDate; i = moment(i).add(1, 'months')) {
+    let daysinMonth = moment(i).daysInMonth();
+    let startDay = moment(i).day();
+    let rowCount = 6;
+    if (daysinMonth === 28 && startDay === 0) {
+      rowCount = 5
+    }
+    else if(daysinMonth === 30 && startDay === 6){
+      rowCount = 7
+    }
+    else if(daysinMonth === 31 && (startDay === 5 || startDay === 6)){
+      rowCount = 7
+    }
+    rows = rows + rowCount;
+  }
+
+  return rows;
+}
 
 /**
  * Get the number of weeks in a given month to be able to calculate the height of that month

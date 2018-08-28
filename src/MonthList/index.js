@@ -8,6 +8,7 @@ import {
   getWeek,
   getWeeksInMonth,
   animate,
+  getWeekOffSet
 } from '../utils';
 import parse from 'date-fns/parse';
 import startOfMonth from 'date-fns/start_of_month';
@@ -80,9 +81,9 @@ export default class MonthList extends Component {
 
   getDateOffset(date) {
     const {min, rowHeight, locale: {weekStartsOn}, height} = this.props;
-    const weeks = getWeek(startOfMonth(min), parse(date), weekStartsOn);
+    const weeks = getWeekOffSet(startOfMonth(min), parse(date), weekStartsOn);
 
-    return weeks * rowHeight - (height - rowHeight/2) / 2;
+    return weeks * rowHeight;
   }
 
   scrollToDate = (date, offset = 0, ...rest) => {

@@ -439,7 +439,8 @@ module.exports = __WEBPACK_EXTERNAL_MODULE_1__;
 /* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "h", function() { return __WEBPACK_IMPORTED_MODULE_9__animate__["a"]; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "n", function() { return keyCodes; });
 /* harmony export (immutable) */ __webpack_exports__["f"] = getMonth;
-/* harmony export (immutable) */ __webpack_exports__["i"] = getWeek;
+/* unused harmony export getWeek */
+/* harmony export (immutable) */ __webpack_exports__["i"] = getWeekOffSet;
 /* harmony export (immutable) */ __webpack_exports__["g"] = getWeeksInMonth;
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "c", function() { return ScrollSpeed; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "k", function() { return scrollbarSize; });
@@ -517,6 +518,28 @@ function getWeek(yearStart, date, weekStartsOn) {
   : yearStart;
 
   return Math.ceil((Math.round((date - yearStartDate) / (60 * 60 * 24 * 1000)) + yearStartDate.getDay() + 1 - weekStartsOn) / 7);
+}
+function getWeekOffSet(yearStart, date, weekStartsOn) {
+  var yearStartDate = typeof yearStart === 'number' ? new Date(yearStart, 0, 1) // 1st Jan of the Year
+  : yearStart;
+  var minStartDate = moment(yearStart).startOf('month');
+  var selectStartDate = moment(date).startOf('month');
+  var rows = 0;
+  for (var i = minStartDate; i <= selectStartDate; i = moment(i).add(1, 'months')) {
+    var daysinMonth = moment(i).daysInMonth();
+    var startDay = moment(i).day();
+    var rowCount = 6;
+    if (daysinMonth === 28 && startDay === 0) {
+      rowCount = 5;
+    } else if (daysinMonth === 30 && startDay === 6) {
+      rowCount = 7;
+    } else if (daysinMonth === 31 && (startDay === 5 || startDay === 6)) {
+      rowCount = 7;
+    }
+    rows = rows + rowCount;
+  }
+
+  return rows;
 }
 
 /**
@@ -5662,7 +5685,7 @@ var MonthList = (_temp2 = _class = function (_Component) {
       }, passThrough.Month, {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 141
+          lineNumber: 142
         },
         __self: _this3
       }));
@@ -5690,9 +5713,9 @@ var MonthList = (_temp2 = _class = function (_Component) {
         weekStartsOn = _props.locale.weekStartsOn,
         height = _props.height;
 
-    var weeks = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["i" /* getWeek */])(__WEBPACK_IMPORTED_MODULE_6_date_fns_start_of_month___default()(min), __WEBPACK_IMPORTED_MODULE_5_date_fns_parse___default()(date), weekStartsOn);
+    var weeks = __webpack_require__.i(__WEBPACK_IMPORTED_MODULE_4__utils__["i" /* getWeekOffSet */])(__WEBPACK_IMPORTED_MODULE_6_date_fns_start_of_month___default()(min), __WEBPACK_IMPORTED_MODULE_5_date_fns_parse___default()(date), weekStartsOn);
 
-    return weeks * rowHeight - (height - rowHeight / 2) / 2;
+    return weeks * rowHeight;
   };
 
   MonthList.prototype.render = function render() {
@@ -5724,7 +5747,7 @@ var MonthList = (_temp2 = _class = function (_Component) {
       overscanCount: overscanMonthCount,
       __source: {
         fileName: _jsxFileName,
-        lineNumber: 177
+        lineNumber: 178
       },
       __self: this
     });
