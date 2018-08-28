@@ -27,6 +27,7 @@
     "date-fns": "^1.27.2",
     "dom-helpers": "^3.2.1",
     "extract-text-webpack-plugin": "^3.0.2",
+    "moment": "^2.22.2",
     "prop-types": "^15.5.7",
     "react-tiny-virtual-list": "^2.2.0",
     "react-transition-group": "^1.1.3",
