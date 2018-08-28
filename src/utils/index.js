@@ -87,12 +87,12 @@ export function getWeeksInMonth(
   const lastOfMonth = new Date(year, month + 1, 0); // Last date of the Month
   const lastWeekNumber = getWeek(year, lastOfMonth, weekStartsOn);
 
-  let rowCount = lastWeekNumber - firstWeekNumber;
+  let rowCount = lastWeekNumber - firstWeekNumber + 1;
 
   // If the last week contains 7 days, we need to add an extra row
-  if (lastOfMonth.getDay() === weekEndsOn || isLastDisplayedMonth) {
-    rowCount++;
-  }
+  // if (lastOfMonth.getDay() === weekEndsOn || isLastDisplayedMonth) {
+  //   rowCount++;
+  // }
 
   return rowCount;
 }

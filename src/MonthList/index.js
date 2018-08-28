@@ -59,7 +59,7 @@ export default class MonthList extends Component {
       let {locale: {weekStartsOn}, months, rowHeight} = this.props;
       let {month, year} = months[index];
       let weeks = getWeeksInMonth(month, year, weekStartsOn, index === months.length - 1);
-      let height = weeks * rowHeight;
+      let height = (weeks * rowHeight) + rowHeight;
       this.monthHeights[index] = height;
     }
 

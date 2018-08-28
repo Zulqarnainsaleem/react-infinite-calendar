@@ -100,7 +100,7 @@ export default class Month extends PureComponent {
 
     return (
       <div className={styles.root} style={{ ...style, lineHeight: `${rowHeight}px` }}>
-        <div style={{ height: `${rowHeight}px` }}>
+        <div className={'calender-month-header'} style={{ height: `${rowHeight}px` }}>
           {format(monthDate, dateFormat, { locale })}
         </div>
         <div className={styles.rows}>
